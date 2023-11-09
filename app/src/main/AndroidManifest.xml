@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS" />
+    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
+
+    <application
+        android:name=".ServicesApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Services"
+        tools:targetApi="34">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Services">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <service android:name="com.chrrissoft.services.started.StartedService" />
+
+        <service android:name="com.chrrissoft.services.foreground.ForegroundService" />
+        <service
+            android:name="com.chrrissoft.services.foreground.ForegroundService$CameraForegroundService"
+            android:foregroundServiceType="camera" />
+        <service
+            android:name="com.chrrissoft.services.foreground.ForegroundService$MicrophoneForegroundService"
+            android:foregroundServiceType="microphone" />
+        <service
+            android:name="com.chrrissoft.services.foreground.ForegroundService$LocationForegroundService"
+            android:foregroundServiceType="location" />
+        <service
+            android:name="com.chrrissoft.services.foreground.ForegroundService$HealthForegroundService"
+            android:foregroundServiceType="health" />
+        <service
+            android:name="com.chrrissoft.services.foreground.ForegroundService$MediaForegroundService"
+            android:foregroundServiceType="mediaPlayback" />
+        <service
+            android:name="com.chrrissoft.services.foreground.ForegroundService$SpecialUseForegroundService"
+            android:foregroundServiceType="specialUse" />
+        <service
+            android:name="com.chrrissoft.services.foreground.ForegroundService$SystemExemptedForegroundService"
+            android:foregroundServiceType="systemExempted" />
+        <service
+            android:name="com.chrrissoft.services.foreground.ForegroundService$ShortForegroundService"
+            android:foregroundServiceType="shortService" />
+        <service
+            android:name="com.chrrissoft.services.foreground.ForegroundService$PhoneCallForegroundService"
+            android:foregroundServiceType="phoneCall" />
+        <service
+            android:name="com.chrrissoft.services.foreground.ForegroundService$DataSyncForegroundService"
+            android:foregroundServiceType="dataSync" />
+
+        <service
+            android:name="com.chrrissoft.services.foreground.StopForegroundService"
+            android:exported="false" />
+
+        <service
+            android:name="com.chrrissoft.services.bound.BoundBinderService"
+            android:exported="true" />
+        <service
+            android:name=".bound.app.BoundService"
+            android:exported="true" />
+
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.chrrissoft.services.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+    </application>
+
+</manifest>
